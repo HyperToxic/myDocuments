@@ -1,0 +1,68 @@
+First step, please make a nandroid if you are unsure of what you are doing.
+
+Second step, install busybox if it is not already installed. Either from the app or
+from the binary I included (ie, adb shell busybox –install /system/xbin/)
+
+Third step, push the four files zip, zipalign, dexo and dexopt-wrapper to /system/bin/
+
+Fourth step, give the three files executable permissions (ie, chmod 755 zip zipalign dexo dexopt-wrapper)
+
+Fifth step, run it!
+
+Once the script is done, your phone will reboot. Your device will appear to be “frozen” until it reboots. That is ok.
+
+Then all you will have to do is run:
+
+
+
+adb pull /system/framework
+
+adb pull /system/app
+
+
+You are now done! The tool will automatically remove the classes.dex from your files as well as zipalign them. So you are optimized and ready to go.
+
+Sample Terminal/Command prompt session. Basically you can copy and paste, ignoring the text after the # of course:
+
+# Commands on Host computer
+
+cd Downloads/universal-odex # change to the location you unzipped the odex tool.
+
+adb remount
+
+adb push dexo /system/bin/
+
+adb push dexopt-wrapper /system/bin/
+
+adb push zip /system/xbin/
+
+adb push zipalign /system/xbin
+
+adb push busybox /system/xbin # you may or may not already have busybox installed, but this will ensure that you have the correct applets installed
+
+# Commands in ADB SHELL
+adb shell # you just entered your Device’s shell
+chmod 755 /system/bin/dexo /system/bin/dexopt-wrapper /system/xbin/zip /system/xbin/zipalign /system/xbin/busybox
+
+busybox –install /system/xbin   #失败  
+dexo # this will be the last command before your exit adb shell and your device reboots
+
+# The “dexo” command executes SUPER fast. It should be done within 30s-1m, depending on ROM and device
+
+# Commands on Host computer
+cd Desktop
+mkdir framework
+mkdir app
+adb pull /system/framework framework
+adb pull /system/app app
+
+# Rejoice.
+If it doesn’t work for you, then you did something wrong. This is version 3.1 of the script and I’d like to think that I’ve fool-proofed it pretty well.
+
+If you have any questions, comments, or suggestions, please post here.
+
+Exclusive to theMikMik. :-)
+
+Tommy
+
+enjoy the possibilities…
